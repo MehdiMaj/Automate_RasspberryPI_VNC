@@ -7,8 +7,7 @@ import time
 def add_raspberry():
     
     # Get the token
-    token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhWDdPVTJxODRNRU5MNm9uQkYzIiwiYXVkIjoiY3JlYXRlLXNlcnZlciIsImlzcyI6InBsYXRmb3JtLWVudGVycHJpc2UtcG9ydGFsOk5DRFVBaWVEOEhKM0xMdVE2M0IiLCJpZCI6InJlQ2ZDUEg3NGpvWWlkeHo4blRVIiwiaWF0IjoxNjU1NDYyNDM0fQ.EJRHdKwnMfGBYMxB8TW6XA-2esFuxO6H_AR-UkEOEBk"
-    
+    token = "YOUR VNC TOKEN"    
     # Get the hostname and name of the Raspberry Pi from the user
     hostname = hostname_entry.get()
     raspberry_name = name_entry.get()
@@ -31,7 +30,7 @@ def add_raspberry():
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Connect to the Raspberry Pi
-        client.connect(hostname=hostname, username='pi', password='COSMOPHYSIO123')
+        client.connect(hostname=hostname, username='YOUR RASPBERRY PI USERNAME', password='YOUR RASPBERRY PI PASSWORD')
         stdin, stdout, stderr = client.exec_command(f'sudo hostnamectl set-hostname {raspberry_name}')
         if stderr.channel.recv_exit_status() == 0:
             print("Command executed successfully")
@@ -58,10 +57,7 @@ def add_raspberry():
         time.sleep(10) # waiting for 10 seconds after reboot
         update_progress(96)
         update_progress(100)
-        client.connect(hostname=hostname, username='pi', password='COSMOPHYSIO123')
-        # Install and configure VNC server on the Raspberry Pi
-        # stdin, stdout, stderr = client.exec_command('sudo apt-get install tightvncserver')
-        # stdin, stdout, stderr = client.exec_command('tightvncserver :1')
+        client.connect(hostname=hostname, username='YOUR RASPBERRY PI USERNAME', password='YOUR RASPBERRY PI PASSWORD')
         # Add the Raspberry Pi to the VNC cloud
         stdin, stdout, stderr = client.exec_command(f'sudo vncserver-x11 -service -joinCloud {token}')
         if stderr.channel.recv_exit_status() == 0:
@@ -83,6 +79,7 @@ def add_raspberry():
 def update_progress(value):
     progress_bar["value"] = value
     root.update()
+    
 root = Tk()
 root.title("Add Raspberry Pi to VNC Cloud")
 
